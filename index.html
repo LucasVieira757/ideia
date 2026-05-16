@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operação Futuro</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#0f172a;
+      --bg2:#111827;
+      --glass:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.1);
+      --green:#10b981;
+      --purple:#8b5cf6;
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:linear-gradient(135deg,#0f172a,#111827,#020617);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:
+      radial-gradient(circle at top left, rgba(16,185,129,0.15), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(139,92,246,0.18), transparent 25%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    section{
+      padding:90px 20px;
+      max-width:1200px;
+      margin:auto;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      position:relative;
+    }
+
+    .hero-content{
+      max-width:900px;
+    }
+
+    .hero h1{
+      font-size:clamp(2.8rem,6vw,5.5rem);
+      line-height:1.05;
+      font-weight:800;
+      margin-bottom:24px;
+      background:linear-gradient(90deg,var(--green),var(--purple));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero h2{
+      font-size:1.3rem;
+      color:var(--muted);
+      font-weight:400;
+      margin-bottom:30px;
+    }
+
+    .hero p{
+      color:#dbeafe;
+      font-size:1.05rem;
+      line-height:1.8;
+      margin-bottom:40px;
+    }
+
+    .fusion-box{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-bottom:40px;
+    }
+
+    .fusion-card{
+      width:260px;
+      padding:28px;
+      border-radius:24px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      transition:0.3s;
+    }
+
+    .fusion-card:hover{
+      transform:translateY(-6px);
+    }
+
+    .fusion-card h3{
+      margin-top:16px;
+      font-size:1.2rem;
+    }
+
+    .python{
+      border-color:rgba(16,185,129,0.3);
+      box-shadow:0 0 25px rgba(16,185,129,0.1);
+    }
+
+    .admin{
+      border-color:rgba(139,92,246,0.3);
+      box-shadow:0 0 25px rgba(139,92,246,0.1);
+    }
+
+    .fusion-icon{
+      font-size:2.2rem;
+    }
+
+    .python .fusion-icon{
+      color:var(--green);
+    }
+
+    .admin .fusion-icon{
+      color:var(--purple);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:linear-gradient(90deg,var(--green),var(--purple));
+      padding:18px 34px;
+      border-radius:14px;
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+      transition:0.3s;
+      box-shadow:0 0 30px rgba(139,92,246,0.25);
+      animation:pulse 2s infinite;
+    }
+
+    .btn:hover{
+      transform:translateY(-4px) scale(1.02);
+    }
+
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 rgba(16,185,129,0.4);}
+      50%{box-shadow:0 0 25px rgba(16,185,129,0.35);}
+      100%{box-shadow:0 0 0 rgba(16,185,129,0.4);}
+    }
+
+    .section-title{
+      font-size:2.4rem;
+      margin-bottom:18px;
+      font-weight:800;
+    }
+
+    .section-sub{
+      color:var(--muted);
+      line-height:1.8;
+      margin-bottom:40px;
+    }
+
+    .glass{
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:40px;
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+    }
+
+    .letter{
+      font-size:1.08rem;
+      line-height:2;
+      color:#e2e8f0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:24px;
+    }
+
+    .card{
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:30px;
+      backdrop-filter:blur(12px);
+      transition:0.3s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transition:0.3s;
+    }
+
+    .card:hover::before{
+      opacity:1;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 0 25px rgba(16,185,129,0.15);
+    }
+
+    .green-hover::before{
+      background:radial-gradient(circle at top left, rgba(16,185,129,0.18), transparent 50%);
+    }
+
+    .purple-hover::before{
+      background:radial-gradient(circle at top left, rgba(139,92,246,0.18), transparent 50%);
+    }
+
+    .card h3{
+      margin-bottom:20px;
+      font-size:1.4rem;
+    }
+
+    .card ul{
+      list-style:none;
+    }
+
+    .card li{
+      margin-bottom:14px;
+      color:#dbeafe;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .timeline{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+      margin-bottom:30px;
+    }
+
+    .timeline-step{
+      cursor:pointer;
+      padding:24px;
+      border-radius:20px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      transition:0.3s;
+      text-align:center;
+    }
+
+    .timeline-step:hover{
+      transform:translateY(-4px);
+      border-color:var(--green);
+    }
+
+    .timeline-step.active{
+      background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(139,92,246,0.2));
+      border-color:rgba(16,185,129,0.5);
+    }
+
+    .timeline-content{
+      min-height:160px;
+    }
+
+    .services{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:20px;
+    }
+
+    .service{
+      padding:24px;
+      border-radius:20px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      transition:0.3s;
+    }
+
+    .service:hover{
+      transform:translateY(-5px);
+      box-shadow:0 0 25px rgba(139,92,246,0.15);
+    }
+
+    .service i{
+      font-size:1.8rem;
+      margin-bottom:16px;
+      color:var(--green);
+    }
+
+    .future{
+      text-align:center;
+    }
+
+    .future-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+      margin-top:40px;
+    }
+
+    .future-item{
+      padding:30px;
+      border-radius:24px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      transition:0.3s;
+    }
+
+    .future-item:hover{
+      transform:translateY(-5px);
+    }
+
+    .future-item i{
+      font-size:2rem;
+      margin-bottom:16px;
+      color:var(--purple);
+    }
+
+    .cta{
+      text-align:center;
+    }
+
+    .cta h2{
+      font-size:2.4rem;
+      line-height:1.4;
+      margin-bottom:30px;
+    }
+
+    .cta-button{
+      font-size:1.1rem;
+      border:none;
+      cursor:pointer;
+    }
+
+    footer{
+      text-align:center;
+      padding:40px 20px;
+      color:#94a3b8;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:0.3s;
+      z-index:1000;
+      padding:20px;
+    }
+
+    .modal.active{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .modal-content{
+      width:100%;
+      max-width:500px;
+      background:#111827;
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:28px;
+      padding:40px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .modal-content::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+      radial-gradient(circle at top left, rgba(16,185,129,0.2), transparent 40%),
+      radial-gradient(circle at bottom right, rgba(139,92,246,0.2), transparent 40%);
+      pointer-events:none;
+    }
+
+    .modal-content h3{
+      font-size:2rem;
+      margin-bottom:16px;
+    }
+
+    .modal-content p{
+      color:#d1d5db;
+      line-height:1.7;
+      margin-bottom:30px;
+    }
+
+    .close-btn{
+      border:none;
+      padding:14px 26px;
+      border-radius:12px;
+      background:linear-gradient(90deg,var(--green),var(--purple));
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* Confetti */
+    .confetti{
+      position:fixed;
+      width:10px;
+      height:10px;
+      top:-10px;
+      z-index:9999;
+      animation:fall linear forwards;
+    }
+
+    @keyframes fall{
+      to{
+        transform:translateY(100vh) rotate(720deg);
+        opacity:0;
+      }
+    }
+
+    /* Reveal */
+    .reveal{
+      opacity:0;
+      transform:translateY(40px);
+      transition:1s;
+    }
+
+    .reveal.active{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media(max-width:768px){
+
+      section{
+        padding:70px 20px;
+      }
+
+      .hero{
+        padding-top:60px;
+      }
+
+      .glass{
+        padding:28px;
+      }
+
+      .section-title{
+        font-size:2rem;
+      }
+
+      .cta h2{
+        font-size:2rem;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content reveal">
+      <h1>Duas Forças. Um Único Futuro.</h1>
+
+      <h2>
+        A união entre Python, Dados e Automação com Administração, Gestão e Estratégia.
+      </h2>
+
+      <p>
+        Esta não é apenas uma proposta de negócio.
+        É um plano de construção de futuro, crescimento financeiro, parceria e propósito.
+        Uma empresa criada por duas pessoas que acreditam em evolução, responsabilidade e visão de longo prazo.
+      </p>
+
+      <div class="fusion-box">
+
+        <div class="fusion-card python">
+          <i class="fa-solid fa-code fusion-icon"></i>
+          <h3>Python & Dados</h3>
+        </div>
+
+        <div class="fusion-card admin">
+          <i class="fa-solid fa-chart-line fusion-icon"></i>
+          <h3>Administração & Gestão</h3>
+        </div>
+
+      </div>
+
+      <a href="#convite" class="btn">
+        Conhecer Nossa Proposta
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CARTA -->
+  <section id="convite" class="reveal">
+    <div class="glass">
+      <h2 class="section-title">💌 A Carta de Convite</h2>
+
+      <div class="letter">
+        <p>
+          Amor, eu venho percebendo que estamos em um momento importante da nossa vida.
+          Enquanto eu aprendo tecnologia, automação e dados, você constrói conhecimento em administração, organização e gestão.
+        </p>
+
+        <br>
+
+        <p>
+          Quanto mais eu estudo, mais entendo que empresas fortes não são feitas apenas de código.
+          Elas são feitas de pessoas organizadas, processos inteligentes, responsabilidade financeira e visão estratégica.
+        </p>
+
+        <br>
+
+        <p>
+          E sinceramente?
+          Eu acredito que você seria uma peça vital nisso tudo.
+        </p>
+
+        <br>
+
+        <p>
+          Você não seria “apoio”.
+          Você seria a pessoa que transforma ideias em operação, organização e crescimento.
+        </p>
+
+        <br>
+
+        <p>
+          Acredito que juntos podemos construir algo nosso.
+          Algo que represente nossa parceria, nossos valores e o futuro que queremos construir como casal.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FORÇAS -->
+  <section class="reveal">
+
+    <h2 class="section-title">⚡ Nossas Forças se Completam</h2>
+    <p class="section-sub">
+      Tecnologia e gestão deixam de ser áreas separadas quando trabalham com o mesmo propósito.
+    </p>
+
+    <div class="grid">
+
+      <div class="card green-hover">
+        <h3>💻 Minha Frente: Python, Dados e Automação</h3>
+
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Extração de dados com Python</li>
+          <li><i class="fa-solid fa-check"></i> Automação de tarefas repetitivas</li>
+          <li><i class="fa-solid fa-check"></i> Organização de arquivos CSV/JSON/Excel</li>
+          <li><i class="fa-solid fa-check"></i> Relatórios e dashboards</li>
+          <li><i class="fa-solid fa-check"></i> Prototipagem de soluções digitais</li>
+        </ul>
+      </div>
+
+      <div class="card purple-hover">
+        <h3>📊 Sua Frente: Gestão, Processos e Crescimento</h3>
+
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Organização financeira</li>
+          <li><i class="fa-solid fa-check"></i> Controle de processos</li>
+          <li><i class="fa-solid fa-check"></i> Atendimento e relacionamento com clientes</li>
+          <li><i class="fa-solid fa-check"></i> Planejamento operacional</li>
+          <li><i class="fa-solid fa-check"></i> Visão comercial e estratégica</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- NEGÓCIO -->
+  <section class="reveal">
+
+    <h2 class="section-title">📈 O Negócio na Prática</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-step active">
+        <h3>1️⃣ Coletamos Dados</h3>
+        <p>Extração de informações e dados de mercado.</p>
+      </div>
+
+      <div class="timeline-step active">
+        <h3>2️⃣ Organizamos Informações</h3>
+        <p>Transformamos dados em relatórios úteis.</p>
+      </div>
+
+      <div class="timeline-step active">
+        <h3>3️⃣ Vendemos Inteligência</h3>
+        <p>Automação e organização para pequenos negócios.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="reveal">
+
+    <h2 class="section-title">🛠 Primeiros Serviços da Empresa</h2>
+
+    <div class="services">
+
+      <div class="service">
+        <i class="fa-solid fa-file-lines"></i>
+        <h3>Relatórios Automatizados</h3>
+      </div>
+
+      <div class="service">
+        <i class="fa-solid fa-table"></i>
+        <h3>Organização Financeira em Planilhas</h3>
+      </div>
+
+      <div class="service">
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        <h3>Coleta de Dados de Concorrentes</h3>
+      </div>
+
+      <div class="service">
+        <i class="fa-solid fa-chart-simple"></i>
+        <h3>Dashboards Simples</h3>
+      </div>
+
+      <div class="service">
+        <i class="fa-solid fa-robot"></i>
+        <h3>Automação Administrativa</h3>
+      </div>
+
+      <div class="service">
+        <i class="fa-solid fa-gears"></i>
+        <h3>Diagnóstico de Processos</h3>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 30 DIAS -->
+  <section class="reveal">
+
+    <h2 class="section-title">🚀 Plano dos Primeiros 30 Dias</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-step active" onclick="changeWeek(1)">
+        <h3>Semana 1</h3>
+        <p>Preparação</p>
+      </div>
+
+      <div class="timeline-step" onclick="changeWeek(2)">
+        <h3>Semana 2</h3>
+        <p>Validação</p>
+      </div>
+
+      <div class="timeline-step" onclick="changeWeek(3)">
+        <h3>Semana 3</h3>
+        <p>Vendas</p>
+      </div>
+
+      <div class="timeline-step" onclick="changeWeek(4)">
+        <h3>Semana 4</h3>
+        <p>Entrega</p>
+      </div>
+
+    </div>
+
+    <div class="glass timeline-content" id="weekContent">
+      <h3>Semana 1 — Estruturação da Base</h3>
+      <p>
+        Definir nome da empresa, proposta de valor, primeiros serviços,
+        identidade visual, estrutura financeira e testes iniciais em Python.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- DIVISÃO -->
+  <section class="reveal">
+
+    <h2 class="section-title">🤝 Divisão das Vitórias</h2>
+
+    <div class="grid">
+
+      <div class="card green-hover">
+        <h3>👨‍💻 Minha Responsabilidade</h3>
+
+        <p>
+          Tecnologia, automação, dados, desenvolvimento de soluções,
+          organização das informações e evolução técnica da empresa.
+        </p>
+      </div>
+
+      <div class="card purple-hover">
+        <h3>👩‍💼 Sua Responsabilidade</h3>
+
+        <p>
+          Gestão, processos, atendimento, organização financeira,
+          relacionamento com clientes e crescimento operacional.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>🌍 Nossa Responsabilidade</h3>
+
+        <p>
+          Construir o futuro juntos, tomar decisões estratégicas,
+          crescer como casal e criar uma empresa sólida e familiar.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FUTURO -->
+  <section class="future reveal">
+
+    <h2 class="section-title">🌌 Visão de Futuro</h2>
+
+    <p class="section-sub">
+      Pequenos passos hoje podem construir liberdade, autonomia e estabilidade amanhã.
+    </p>
+
+    <div class="future-grid">
+
+      <div class="future-item">
+        <i class="fa-solid fa-wallet"></i>
+        <h3>Renda Extra</h3>
+      </div>
+
+      <div class="future-item">
+        <i class="fa-solid fa-building"></i>
+        <h3>Empresa Familiar</h3>
+      </div>
+
+      <div class="future-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <h3>Portfólio Profissional</h3>
+      </div>
+
+      <div class="future-item">
+        <i class="fa-solid fa-key"></i>
+        <h3>Autonomia</h3>
+      </div>
+
+      <div class="future-item">
+        <i class="fa-solid fa-heart"></i>
+        <h3>Crescimento do Casal</h3>
+      </div>
+
+      <div class="future-item">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <h3>Liberdade Gradual</h3>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="cta reveal">
+
+    <h2>
+      “O código pode iniciar o sistema.
+      Mas é a nossa parceria que pode construir o futuro.”
+    </h2>
+
+    <button class="btn cta-button" onclick="openModal()">
+      🎯 Aceito Construir Esse Futuro Com Você
+    </button>
+
+  </section>
+
+  <footer>
+    Operação Futuro • Construindo algo nosso com propósito, tecnologia e parceria.
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+
+    <div class="modal-content">
+
+      <h3>🎉 Parabéns, Sócia!</h3>
+
+      <p>
+        A Operação Futuro começou.
+        Agora tecnologia, estratégia e parceria caminham juntas
+        para construir algo maior que nós mesmos.
+      </p>
+
+      <button class="close-btn" onclick="closeModal()">
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    // Timeline dinâmica
+    const weekContent = document.getElementById('weekContent');
+    const steps = document.querySelectorAll('.timeline-step');
+
+    const weekTexts = {
+      1: `
+        <h3>Semana 1 — Estruturação da Base</h3>
+        <p>
+          Definir nome da empresa, propósito, público-alvo, identidade visual,
+          estrutura financeira e primeiros testes de automação em Python.
+        </p>
+      `,
+      2: `
+        <h3>Semana 2 — Validação</h3>
+        <p>
+          Criar um portfólio simples, modelos de relatórios,
+          apresentações comerciais e exemplos reais de solução.
+        </p>
+      `,
+      3: `
+        <h3>Semana 3 — Prospecção</h3>
+        <p>
+          Entrar em contato com pequenos negócios,
+          apresentar soluções e validar dores reais do mercado.
+        </p>
+      `,
+      4: `
+        <h3>Semana 4 — Primeira Entrega</h3>
+        <p>
+          Fechar o primeiro projeto piloto,
+          entregar relatórios organizados e coletar feedback para melhorar.
+        </p>
+      `
+    };
+
+    function changeWeek(week){
+      weekContent.innerHTML = weekTexts[week];
+
+      steps.forEach(step => step.classList.remove('active'));
+      steps[week - 1].classList.add('active');
+    }
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+
+    function revealOnScroll(){
+      reveals.forEach(reveal => {
+        const top = reveal.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if(top < windowHeight - 100){
+          reveal.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // Modal
+    const modal = document.getElementById('modal');
+
+    function openModal(){
+      modal.classList.add('active');
+      createConfetti();
+    }
+
+    function closeModal(){
+      modal.classList.remove('active');
+    }
+
+    // Confetti
+    function createConfetti(){
+
+      const colors = ['#10b981','#8b5cf6','#ffffff'];
+
+      for(let i = 0; i < 120; i++){
+
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        confetti.style.width = Math.random() * 10 + 6 + 'px';
+        confetti.style.height = confetti.style.width;
+
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        },5000);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
